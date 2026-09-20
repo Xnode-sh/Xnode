@@ -11,7 +11,7 @@ Linux/macOS с Python 3.
 
 ### `email_osint.py`
 Пассивная разведка по email: без брутфорса и обхода авторизации.
-j
+
 - проверка регистрации в Gravatar;
 - проверка занятости email на сайтах через password-recovery/signup формы
   (через `holehe`, см. ниже);
