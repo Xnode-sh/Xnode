@@ -36,6 +36,16 @@ python3 email_osint.py user@example.com --no-holehe --no-dorks
 ~/.local/share/pipx/venvs/holehe/bin/python3 holehe_runner.py user@example.com [timeout]
 ```
 
+### `username_osint.py`
+Проверка занятости юзернейма параллельно на нескольких площадках: GitHub,
+GitLab, DockerHub, HackerNews, Keybase, Steam, Telegram (последний —
+эвристика по og:title, не 100% надёжна).
+
+```bash
+python3 username_osint.py torvalds
+python3 username_osint.py torvalds --json report.json
+```
+
 ### `api_parser.py`
 Универсальный парсер публичного JSON API с постраничной пагинацией, ретраями
 и поддержкой rate-limit (429).
