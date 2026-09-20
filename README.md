@@ -101,6 +101,12 @@ pipx install holehe
 На системах с PEP 668 (свежий Debian/Ubuntu, в т.ч. Termux proot) `pip install`
 без venv откажется работать — используй venv, как выше, либо `pipx`.
 
+## Смотри также
+
+[termux-agent](https://github.com/Xnode-sh/termux-agent) — локальный LLM-агент
+с tool-calling для Termux, умеет сам дёргать эти OSINT-скрипты по запросу
+(`osint_lookup`) поверх модели в Ollama, без облака.
+
 ## Дисклеймер
 
 Инструменты предназначены только для законной разведки: проверка собственных
