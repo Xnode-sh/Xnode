@@ -38,12 +38,32 @@ python3 email_osint.py user@example.com --no-holehe --no-dorks
 
 ### `username_osint.py`
 Проверка занятости юзернейма параллельно на нескольких площадках: GitHub,
-GitLab, DockerHub, HackerNews, Keybase, Steam, Telegram (последний —
-эвристика по og:title, не 100% надёжна).
+GitLab, DockerHub, HackerNews, Keybase, Steam, Telegram.
 
 ```bash
 python3 username_osint.py torvalds
 python3 username_osint.py torvalds --json report.json
+```
+
+### `exif_osint.py`
+Разведка по фото: EXIF-метаданные (камера, дата съёмки, софт) и GPS-координаты,
+если есть, со ссылкой на карту. `--strip` сохраняет копию без метаданных —
+полезно перед публикацией своих фото.
+
+```bash
+python3 exif_osint.py photo.jpg
+python3 exif_osint.py photo.jpg --json report.json
+python3 exif_osint.py photo.jpg --strip clean.jpg
+```
+
+### `phone_osint.py`
+Разбор номера телефона через локальную базу `libphonenumber`: валидность,
+регион, оператор, часовой пояс, тип номера — плюс ссылки на WhatsApp/Viber
+и гугл-дорк для ручной проверки. Без звонков и запросов к внешним API.
+
+```bash
+python3 phone_osint.py +380671234567
+python3 phone_osint.py 0671234567 --region UA
 ```
 
 ### `api_parser.py`
@@ -61,11 +81,15 @@ python3 api_parser.py https://api.example.com/items \
 ```bash
 git clone https://github.com/Xnode-sh/Xnode.git
 cd Xnode
+python3 -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
 
 # опционально, для проверки email через holehe:
 pipx install holehe
 ```
+
+На системах с PEP 668 (свежий Debian/Ubuntu, в т.ч. Termux proot) `pip install`
+без venv откажется работать — используй venv, как выше, либо `pipx`.
 
 ## Дисклеймер
 

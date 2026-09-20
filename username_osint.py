@@ -62,8 +62,7 @@ def check_steam(u, session, timeout):
 
 def check_telegram(u, session, timeout):
     r = session.get(f"https://t.me/{u}", timeout=timeout)
-    placeholder = f"Telegram: Contact @{u}"
-    found = placeholder not in r.text
+    found = "tgme_page_photo" in r.text
     return found, f"https://t.me/{u}"
 
 
@@ -74,7 +73,7 @@ SITES = {
     "HackerNews": check_hackernews,
     "Keybase": check_keybase,
     "Steam": check_steam,
-    "Telegram (эвристика, не 100%)": check_telegram,
+    "Telegram": check_telegram,
 }
 
 
