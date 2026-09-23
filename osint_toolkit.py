@@ -29,6 +29,7 @@ TOOLS = {
     "2": ("Username OSINT", "username_osint.py", "username"),
     "3": ("Phone OSINT", "phone_osint.py", "phone"),
     "4": ("EXIF/Photo OSINT", "exif_osint.py", "photo"),
+    "5": ("Network recon (DNS/HTTP/TLS)", "recon_net.py", "domain"),
 }
 
 HTML_TEMPLATE = """<!DOCTYPE html>
@@ -158,6 +159,18 @@ def do_single_tool(key):
         region = prompt("Регион по умолчанию (напр. UA, Enter - пропустить): ")
         if region:
             extra_args += ["--region", region]
+    if script == "recon_net.py":
+        json_path = os.path.join(
+            REPORTS_DIR, f"recon_{safe_slug(value)}_{timestamp()}.json"
+        )
+        print(f"{YELLOW}[!] Только для своих ресурсов / с письменным разрешением.{RESET}")
+        print(f"{DIM}Пассивная разведка: DNS + HTTP + TLS...{RESET}\n")
+        subprocess.run(
+            [sys.executable, os.path.join(BASE_DIR, script), "recon", value, "--json", json_path],
+            stdin=subprocess.DEVNULL,
+        )
+        offer_export(json_path, f"Network recon: {value}")
+        return
 
     ensure_reports_dir()
     json_path = os.path.join(
@@ -224,8 +237,8 @@ def print_menu():
     print(f"{BOLD}Выбери проверку:{RESET}")
     for key, (label, _, _) in TOOLS.items():
         print(f"  {CYAN}{key}{RESET}) {label}")
-    print(f"  {CYAN}5{RESET}) Полный профиль (email+username+phone+фото)")
-    print(f"  {CYAN}6{RESET}) Список сохранённых отчётов")
+    print(f"  {CYAN}6{RESET}) Полный профиль (email+username+phone+фото)")
+    print(f"  {CYAN}7{RESET}) Список сохранённых отчётов")
     print(f"  {CYAN}0{RESET}) Выход\n")
 
 
@@ -240,9 +253,9 @@ def main():
             break
         elif choice in TOOLS:
             do_single_tool(choice)
-        elif choice == "5":
-            do_full_profile()
         elif choice == "6":
+            do_full_profile()
+        elif choice == "7":
             list_reports()
         else:
             print(f"{RED}Не понял выбор.{RESET}")
